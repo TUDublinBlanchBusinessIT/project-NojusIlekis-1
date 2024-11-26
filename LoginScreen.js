@@ -55,9 +55,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
   },
-  text: {
-    fontSize: 20,
+  header: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
   },
+
   
 });
 
