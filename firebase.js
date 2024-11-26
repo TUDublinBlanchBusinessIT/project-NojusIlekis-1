@@ -7,6 +7,7 @@ import firebase from "firebase"
 const firebaseConfig = {
   apiKey: "AIzaSyCNvg88hAZ0S42NRfmad8fnn5kzlFmpNF0",
   authDomain: "habbittracker-97af5.firebaseapp.com",
+  databaseURL: "https://testfb8-a772e.firebaseapp.com",
   projectId: "habbittracker-97af5",
   storageBucket: "habbittracker-97af5.firebasestorage.app",
   messagingSenderId: "903961025098",
