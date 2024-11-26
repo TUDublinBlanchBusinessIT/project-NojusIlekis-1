@@ -61,7 +61,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
-
+  input: {
+    marginBottom: 12,
+  },
   
 });
 
