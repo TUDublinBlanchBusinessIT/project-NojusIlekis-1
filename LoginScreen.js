@@ -68,6 +68,10 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
   },
+  button: {
+    marginTop: 16,
+    backgroundColor: "#6200EE",
+  },
   
 });
 
