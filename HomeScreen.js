@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const habits = ["Drink Water", "Exercise", "Meditate"];
 
   return (
@@ -12,6 +12,11 @@ const HomeScreen = () => {
           {habit}
         </Text>
       ))}
+      {/* Button to navigate to ProfileScreen */}
+      <Button
+        title="Go to Profile"
+        onPress={() => navigation.navigate("Profile")}
+      />
     </View>
   );
 };

@@ -16,20 +16,15 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-    return (
+  return (
     <View style={styles.container}>
-      
       <Text style={styles.header}>Welcome Back!</Text>
-
-      {/* Email Input */}
       <TextInput
         label="Email"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
       />
-      
-      {/* Password Input */}
       <TextInput
         label="Password"
         value={password}
@@ -37,11 +32,7 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
         style={styles.input}
       />
-      
-      {/* Error Message */}
       {error ? <Text style={styles.error}>{error}</Text> : null}
-
-      {/* Updated Login Button */}
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         Login
       </Button>
@@ -72,7 +63,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     backgroundColor: "#6200EE",
   },
-  
 });
 
 export default LoginScreen;
