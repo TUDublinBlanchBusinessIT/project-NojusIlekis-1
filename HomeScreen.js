@@ -16,15 +16,23 @@ const HomeScreen = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 16,
+    backgroundColor: "#f5f5f5",
   },
-  text: {
-    fontSize: 20,
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  habit: {
+    fontSize: 18,
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 5,
   },
 });
 
