@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 12,
   },
+  error: {
+    color: "red",
+    marginBottom: 10,
+  },
   
 });
 
