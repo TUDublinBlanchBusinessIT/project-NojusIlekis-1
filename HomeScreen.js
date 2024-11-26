@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const HomeScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.title}>Welcome to Habit Tracker!</Text>
-  </View>
-);
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome to HabbitTracker!</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -13,9 +15,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
+  text: {
+    fontSize: 20,
   },
 });
 
