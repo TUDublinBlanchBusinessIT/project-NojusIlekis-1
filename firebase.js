@@ -1,18 +1,18 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCNvg88hAZ0S42NRfmad8fnn5kzlFmpNF0",
+  authDomain: "habbittracker-97af5.firebaseapp.com",
+  projectId: "habbittracker-97af5",
+  storageBucket: "habbittracker-97af5.firebasestorage.app",
+  messagingSenderId: "903961025098",
+  appId: "1:903961025098:web:0aa192f6df8e775053e4b3"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 export default firebase;
