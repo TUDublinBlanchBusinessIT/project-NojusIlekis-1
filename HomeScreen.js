@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { db } from "./firebase"; // Firestore instance
 
 const HomeScreen = ({ navigation }) => {
-  const [habits, setHabits] = useState(["Drink Water", "Exercise", "Meditate"]);
+  const [habits, setHabits] = useState([]);
+
+  const fetchHabits = async () => {
+    try {
+      const querySnapshot = await db.collection("habits").get(); // Fetch documents
+      const habitList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setHabits(habitList); // Update state with fetched data
+    } catch (error) {
+      alert(`Error fetching habits: ${error.message}`);
+      console.error("Error fetching habits:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHabits(); // Fetch habits when the component mounts
+  }, []);
 
   const handleLogout = () => {
     navigation.navigate("Login");
@@ -13,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const goToAddHabit = () => {
-    navigation.navigate("AddHabit", { setHabits });
+    navigation.navigate("AddHabit");
   };
 
   return (
@@ -21,20 +40,17 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.title}>Your Habits</Text>
       <FlatList
         data={habits}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <Text style={styles.habit}>{item}</Text>}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Text style={styles.habit}>{item.name}</Text>}
       />
       <View style={styles.buttonContainer}>
-        {/* Go to Profile Button */}
         <TouchableOpacity style={styles.button} onPress={goToProfile}>
           <Text style={styles.buttonText}>Go to Profile</Text>
         </TouchableOpacity>
-        {/* Logout Button */}
         <TouchableOpacity style={[styles.button, styles.logout]} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
-      {/* Floating Action Button */}
       <TouchableOpacity style={styles.fab} onPress={goToAddHabit}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>

@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { db } from "./firebase"; // Firestore instance
 
-const AddHabitScreen = ({ navigation, route }) => {
+const AddHabitScreen = ({ navigation }) => {
   const [habitName, setHabitName] = useState("");
 
-  const handleAddHabit = () => {
+  const handleAddHabit = async () => {
     if (habitName.trim() === "") {
-      return; // Don't allow empty habits
+      alert("Please enter a habit name!");
+      return;
     }
 
-    // Get the setHabits function passed from HomeScreen
-    const { setHabits } = route.params;
-    setHabits((prevHabits) => [...prevHabits, habitName]); // Add new habit
-    navigation.goBack(); // Return to HomeScreen
+    try {
+      // Add a new document to the "habits" collection
+      await db.collection("habits").add({
+        name: habitName,
+        createdAt: new Date().toISOString(),
+      });
+
+      alert("Habit added successfully!");
+      setHabitName(""); // Clear input
+      navigation.goBack(); // Go back to HomeScreen
+    } catch (err) {
+      alert(`Error adding habit: ${err.message}`);
+      console.error("Error adding habit:", err);
+    }
   };
 
   return (
