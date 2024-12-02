@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import {TextInput, Button, Text} from "react-native-paper";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,22 +19,22 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Welcome Back!</Text>
       <TextInput
-        label="Email"
+        style={styles.input}
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
       />
       <TextInput
-        label="Password"
+        style={styles.input}
+        placeholder="Password"
         value={password}
         secureTextEntry
         onChangeText={setPassword}
-        style={styles.input}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button mode="contained" onPress={handleLogin} style={styles.button}>
-        Login
-      </Button>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -53,15 +52,29 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
     marginBottom: 12,
+    fontSize: 16,
   },
   error: {
     color: "red",
     marginBottom: 10,
+    textAlign: "center",
   },
   button: {
     marginTop: 16,
     backgroundColor: "#6200EE",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
