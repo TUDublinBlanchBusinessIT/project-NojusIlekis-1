@@ -5,22 +5,21 @@ import { db } from "./firebase"; // Firestore instance
 const HomeScreen = ({ navigation }) => {
   const [habits, setHabits] = useState([]);
 
-  const fetchHabits = async () => {
-    try {
-      const querySnapshot = await db.collection("habits").get(); // Fetch documents
-      const habitList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setHabits(habitList); // Update state with fetched data
-    } catch (error) {
-      alert(`Error fetching habits: ${error.message}`);
-      console.error("Error fetching habits:", error);
-    }
-  };
-
+  // Fetch habits from Firestore
   useEffect(() => {
-    fetchHabits(); // Fetch habits when the component mounts
+    db.collection("habits")
+      .get()
+      .then((querySnapshot) => {
+        setHabits(
+          querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching habits:", error);
+      });
   }, []);
 
   const handleLogout = () => {

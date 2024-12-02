@@ -5,27 +5,26 @@ import { db } from "./firebase"; // Firestore instance
 const AddHabitScreen = ({ navigation }) => {
   const [habitName, setHabitName] = useState("");
 
-  const handleAddHabit = async () => {
+  // Save habit to Firestore
+  async function saveHabit() {
     if (habitName.trim() === "") {
       alert("Please enter a habit name!");
       return;
     }
 
     try {
-      // Add a new document to the "habits" collection
       await db.collection("habits").add({
         name: habitName,
         createdAt: new Date().toISOString(),
       });
-
       alert("Habit added successfully!");
       setHabitName(""); // Clear input
-      navigation.goBack(); // Go back to HomeScreen
+      navigation.goBack(); // Navigate back to HomeScreen
     } catch (err) {
       alert(`Error adding habit: ${err.message}`);
       console.error("Error adding habit:", err);
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -36,7 +35,7 @@ const AddHabitScreen = ({ navigation }) => {
         value={habitName}
         onChangeText={setHabitName}
       />
-      <TouchableOpacity style={styles.button} onPress={handleAddHabit}>
+      <TouchableOpacity style={styles.button} onPress={saveHabit}>
         <Text style={styles.buttonText}>Save Habit</Text>
       </TouchableOpacity>
     </View>

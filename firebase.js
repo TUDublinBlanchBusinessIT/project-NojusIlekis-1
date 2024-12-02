@@ -2,13 +2,13 @@ import firebase from "firebase";
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCNvg88hAZ0S42NRfmad8fnn5kzlFmpNF0",
-  authDomain: "habbittracker-97af5.firebaseapp.com",
+  apiKey: "AIzaSyB8P4Tv3KO16VxekOfSYpRI0ZAWhghN3j8",
+  authDomain: "firstfirebaseproject-e362a.firebaseapp.com",
   databaseURL: "https://testfb8-a772e.firebaseapp.com",
-  projectId: "habbittracker-97af5",
-  storageBucket: "habbittracker-97af5.firebasestorage.app",
-  messagingSenderId: "903961025098",
-  appId: "1:903961025098:web:0aa192f6df8e775053e4b3",
+  projectId: "firstfirebaseproject-e362a",
+  storageBucket: "firstfirebaseproject-e362a.firebasestorage.app",
+  messagingSenderId: "26917379474",
+  appId: "1:26917379474:web:90355aa5db3ed1bcb8354b",
 };
 
 // Initialize Firebase only once
@@ -20,3 +20,4 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 
 export { db };
+
