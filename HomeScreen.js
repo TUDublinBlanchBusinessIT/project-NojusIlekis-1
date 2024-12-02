@@ -67,6 +67,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  button: {
+    marginRight: 8,
+  },
+  logout: {
+    backgroundColor: "#d9534f",
+  },
+  fab: {
+    position: "absolute",
+    right: 16,
+    bottom: 16,
+    backgroundColor: "#6200EE",
+  },
 });
 
 export default HomeScreen;
