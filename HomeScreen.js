@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import { db } from "./firebase"; // Firestore instance
 
 const HomeScreen = ({ navigation }) => {
   const [habits, setHabits] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch habits from Firestore
+  const fetchHabits = async () => {
+    setIsLoading(true); // Start loading
+    try {
+      const querySnapshot = await db.collection("habits").get();
+      setHabits(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching habits:", error);
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
+  };
+
   useEffect(() => {
-    db.collection("habits")
-      .get()
-      .then((querySnapshot) => {
-        setHabits(
-          querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching habits:", error);
-      });
+    fetchHabits();
   }, []);
 
   const handleLogout = () => {
@@ -37,11 +42,18 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Habits</Text>
-      <FlatList
-        data={habits}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text style={styles.habit}>{item.name}</Text>}
-      />
+
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#6200EE" style={styles.loader} />
+      ) : (
+        <FlatList
+          data={habits}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Text style={styles.habit}>{item.name}</Text>}
+          style={styles.list}
+        />
+      )}
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={goToProfile}>
           <Text style={styles.buttonText}>Go to Profile</Text>
@@ -50,6 +62,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
+
       <TouchableOpacity style={styles.fab} onPress={goToAddHabit}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
@@ -68,6 +81,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  list: {
+    flex: 1, // Ensures the list takes up available space
+  },
   habit: {
     fontSize: 18,
     padding: 10,
@@ -76,9 +96,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonContainer: {
-    marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
   },
   button: {
     flex: 1,
