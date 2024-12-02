@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import {Button, FAB} from "react-native-paper";
 
 const HomeScreen = ({ navigation }) => {
-  const habits = ["Drink Water", "Exercise", "Meditate"];
+  const [habits, setHabits] = useState(["Drink Water", "Exercise", "Meditate"]);
 
 const handleLogout = () => {
   navigation.navigate("Login");
@@ -13,20 +13,33 @@ const goToProfile = () => {
   navigation.navigate("Profile");
   };
 
+const goToAddHabit = () => {
+  navigation.navigate("AddHabit", { setHabits });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Habits</Text>
-      {habits.map((habit, index) => (
-        <Text key={index} style={styles.habit}>
-          {habit}
-        </Text>
-      ))}
+      <FlatList
+        data={habits}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <Text style={styles.habit}>{item}</Text>}
+      />
       <View style={styles.buttonContainer}>
-        {/* Go to Profile Button */}
-        <Button title="Go to Profile" onPress={goToProfile} color="#007BFF" />
-        {/* Logout Button */}
-        <Button title="Logout" onPress={handleLogout} color="#d9534f" />
+        <Button mode="contained" onPress={goToProfile} style={styles.button}>
+          Go to Profile
+        </Button>
+        <Button mode="contained" onPress={handleLogout} style={styles.logout}>
+          Logout
+        </Button>
       </View>
+      {/* Floating Action Button */}
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={goToAddHabit}
+        label="Add Habit"
+      />
     </View>
   );
 };
