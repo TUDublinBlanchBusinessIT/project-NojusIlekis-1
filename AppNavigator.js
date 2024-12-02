@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./HomeScreen"; 
 import LoginScreen from "./LoginScreen";
 import ProfileScreen from "./ProfileScreen";
+import AddHabitScreen from "./AddHabitScreen";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,11 @@ const AppNavigator = () => {
           name="Profile"
           component={ProfileScreen}
           options={{ title: "User Profile" }}
+        />
+        <Stack.Screen
+          name="AddHabit"
+          component={AddHabitScreen}
+          options={{ title: "Add Habit" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
