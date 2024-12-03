@@ -30,6 +30,7 @@ const AppNavigator = () => {
           component={ProfileScreen}
           options={{ title: "User Profile" }}
         />
+        {/* Add Habit Screen */}
         <Stack.Screen
           name="AddHabit"
           component={AddHabitScreen}

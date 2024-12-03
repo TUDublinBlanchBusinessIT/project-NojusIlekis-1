@@ -7,7 +7,7 @@ const HomeScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchHabits = async () => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const querySnapshot = await db.collection("habits").get();
       setHabits(
@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
     } catch (error) {
       console.error("Error fetching habits:", error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -42,18 +42,19 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Habits</Text>
-
       {isLoading ? (
-        <ActivityIndicator size="large" color="#6200EE" style={styles.loader} />
+        <ActivityIndicator size="large" color="#6200EE" />
       ) : (
         <FlatList
           data={habits}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Text style={styles.habit}>{item.name}</Text>}
-          style={styles.list}
+          renderItem={({ item }) => (
+            <View style={styles.habitContainer}>
+              <Text style={styles.habit}>{item.name}</Text>
+            </View>
+          )}
         />
       )}
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={goToProfile}>
           <Text style={styles.buttonText}>Go to Profile</Text>
@@ -62,7 +63,6 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
-
       <TouchableOpacity style={styles.fab} onPress={goToAddHabit}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
@@ -81,24 +81,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  loader: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  list: {
-    flex: 1, // Ensures the list takes up available space
-  },
-  habit: {
-    fontSize: 18,
+  habitContainer: {
+    marginBottom: 10,
     padding: 10,
-    marginVertical: 5,
     backgroundColor: "#e0e0e0",
     borderRadius: 5,
   },
+  habit: {
+    fontSize: 18,
+  },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     marginTop: 10,
+    justifyContent: "space-between",
   },
   button: {
     flex: 1,

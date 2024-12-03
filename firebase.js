@@ -4,7 +4,7 @@ import firebase from "firebase";
 const firebaseConfig = {
   apiKey: "AIzaSyB8P4Tv3KO16VxekOfSYpRI0ZAWhghN3j8",
   authDomain: "firstfirebaseproject-e362a.firebaseapp.com",
-  databaseURL: "https://testfb8-a772e.firebaseapp.com",
+  databaseURL: "https://firstfirebaseproject-e362a.firebaseapp.com",
   projectId: "firstfirebaseproject-e362a",
   storageBucket: "firstfirebaseproject-e362a.firebasestorage.app",
   messagingSenderId: "26917379474",
