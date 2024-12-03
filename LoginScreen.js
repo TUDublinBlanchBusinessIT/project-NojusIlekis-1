@@ -7,8 +7,9 @@ const LoginScreen = ({ navigation }) => {
   const [error, setError] = useState("");
 
   const handleLogin = () => {
+    // Placeholder login logic
     if (email === "test@test.com" && password === "password") {
-      navigation.navigate("Home");
+      navigation.navigate("Main"); // Navigate to Tab Navigator
     } else {
       setError("Invalid email or password.");
     }
@@ -16,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Welcome Back!</Text>
+      <Text style={styles.header}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
- 
   input: {
     borderWidth: 1,
     borderColor: "#ccc",

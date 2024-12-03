@@ -1,14 +1,26 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "./HomeScreen"; 
-import LoginScreen from "./LoginScreen";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
 import AddHabitScreen from "./AddHabitScreen";
+import LoginScreen from "./LoginScreen";
 
 const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-const AppNavigator = () => {
+// Tab Navigator for Home, Profile, and Add Habit screens
+const TabNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Profile" component={ProfileScreen} />
+    <Tab.Screen name="Add Habit" component={AddHabitScreen} />
+  </Tab.Navigator>
+);
+
+// Main App Navigator
+export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -16,29 +28,15 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ title: "Login Page" }}
+          options={{ headerShown: false }} // No header for login screen
         />
-        {/* Home Screen */}
+        {/* Tab Navigator */}
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Dashboard" }}
-        />
-        {/* Profile Screen */}
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{ title: "User Profile" }}
-        />
-        {/* Add Habit Screen */}
-        <Stack.Screen
-          name="AddHabit"
-          component={AddHabitScreen}
-          options={{ title: "Add Habit" }}
+          name="Main"
+          component={TabNavigator}
+          options={{ headerShown: false }} // No header for tab navigation
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
-export default AppNavigator;
+}

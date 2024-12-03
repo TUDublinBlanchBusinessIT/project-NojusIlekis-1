@@ -2,35 +2,37 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const ProfileScreen = () => {
-  const [profileImage, setProfileImage] = useState(null); // State to store profile image URI
+const ProfileScreen = ({ navigation }) => {
+  const [profileImage, setProfileImage] = useState(null);
 
   const pickImage = async () => {
     try {
-      // Request permission to access the media library
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
       if (!permissionResult.granted) {
         Alert.alert("Permission Denied", "Permission to access the media library is required.");
         return;
       }
 
-      // Launch the image picker
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["photo"], // Use an array of MediaType (e.g., ["photo"])
+        mediaTypes: ["photo"],
         allowsEditing: true,
-        aspect: [1, 1], // Square aspect ratio
-        quality: 1, // High-quality image
+        aspect: [1, 1],
+        quality: 1,
       });
 
       if (!result.canceled) {
-        setProfileImage(result.assets[0].uri); // Update the profileImage state with the selected URI
-      } else {
-        console.log("Image picker canceled");
+        setProfileImage(result.assets[0].uri);
       }
     } catch (error) {
       console.error("Error picking image: ", error);
     }
+  };
+
+  const handleLogout = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }], // Reset navigation stack to Login screen
+    });
   };
 
   return (
@@ -47,6 +49,9 @@ const ProfileScreen = () => {
       <Text style={styles.detail}>Email: johndoe@example.com</Text>
       <TouchableOpacity style={styles.button} onPress={pickImage}>
         <Text style={styles.buttonText}>Change Profile Picture</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -93,8 +98,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: "center",
+    marginBottom: 20,
   },
   buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  logoutButton: {
+    backgroundColor: "#d9534f",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  logoutText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
