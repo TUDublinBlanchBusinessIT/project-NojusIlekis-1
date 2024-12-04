@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { db } from "./firebase"; // Firestore instance
 
 const HomeScreen = ({ navigation }) => {
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch habits from Firestore
   const fetchHabits = async () => {
     setIsLoading(true);
     try {
@@ -20,6 +28,17 @@ const HomeScreen = ({ navigation }) => {
       console.error("Error fetching habits:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Delete a habit from Firestore and update local state
+  const deleteHabit = async (habitId) => {
+    try {
+      await db.collection("habits").doc(habitId).delete(); // Delete from Firestore
+      setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId)); // Update state
+      console.log("Habit deleted successfully");
+    } catch (error) {
+      console.error("Error deleting habit:", error);
     }
   };
 
@@ -51,6 +70,12 @@ const HomeScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <View style={styles.habitContainer}>
               <Text style={styles.habit}>{item.name}</Text>
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => deleteHabit(item.id)}
+              >
+                <Text style={styles.deleteButtonText}>Delete</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -82,6 +107,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   habitContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
     padding: 10,
     backgroundColor: "#e0e0e0",
@@ -89,6 +117,18 @@ const styles = StyleSheet.create({
   },
   habit: {
     fontSize: 18,
+    flex: 1,
+  },
+  deleteButton: {
+    backgroundColor: "#d9534f",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
   },
   buttonContainer: {
     flexDirection: "row",
