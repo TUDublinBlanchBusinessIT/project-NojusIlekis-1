@@ -1,34 +1,34 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { db } from "./firebase";
+import { db } from "./firebase"; // Import Firestore instance
 
 const AddHabitScreen = ({ navigation }) => {
   const [habitName, setHabitName] = useState("");
-
-  Alert.alert("got this far");
 
   const handleAddHabit = async () => {
     if (habitName.trim() === "") {
       Alert.alert("Validation Error", "Please enter a habit name!");
       return;
     }
+
     try {
-      Alert.alert("got this far tryblock");
+      console.log("Attempting to write to Firestore...");
       await db.collection("habits").add({
         name: habitName,
         createdAt: new Date().toISOString(),
-        completed: false,
+        completed: false, // Default value
       });
       Alert.alert("Success", "Habit added successfully!", [
         {
           text: "OK",
           onPress: () => {
-            setHabitName("");
-            navigation.goBack();
+            setHabitName(""); // Clear the input field
+            navigation.goBack(); // Navigate back to the home screen
           },
         },
       ]);
     } catch (error) {
+      console.error("Error adding habit to Firestore:", error);
       Alert.alert("Error", `Failed to add habit: ${error.message}`);
     }
   };
@@ -41,6 +41,7 @@ const AddHabitScreen = ({ navigation }) => {
         placeholder="Enter habit name"
         value={habitName}
         onChangeText={setHabitName}
+        placeholderTextColor="#666"
       />
       <TouchableOpacity style={styles.button} onPress={handleAddHabit}>
         <Text style={styles.buttonText}>Save Habit</Text>
